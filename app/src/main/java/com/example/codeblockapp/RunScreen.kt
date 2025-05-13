@@ -33,32 +33,7 @@ fun RunScreen(){
             .padding(12.dp),
 
         ){
-        Row (
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 8.dp),
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
-        ){
-            Box(
-                modifier = Modifier
-                    .background(color = Color(0xFF4CAF50), shape = CircleShape)
-                    .size(48.dp)
-                    .clickable { },
-                contentAlignment = Alignment.Center
-            ){
-                Text("▶", color = Color.White,fontSize = 20.sp)
 
-            }
-            Box(
-                modifier = Modifier
-                    .background(color = Color(0xFFF44336), shape = CircleShape)
-                    .size(48.dp)
-                    .clickable { },
-                contentAlignment = Alignment.Center
-            ){
-                Text("■", color = Color.White, fontSize = 20.sp)
-            }
-        }
         Box(
             modifier = Modifier
                 .weight(1f)
@@ -67,21 +42,9 @@ fun RunScreen(){
                 .background(Color(0xFFE0E0E0), RoundedCornerShape(12.dp)),
             contentAlignment = Alignment.Center
         ){
-            Text("Основное поле для расположения спрайтов", fontSize = 16.sp)
+            Text("Основное поле для вывода результата", fontSize = 16.sp)
         }
-        Spacer(modifier = Modifier.height(12.dp))
 
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(225.dp)
-                .shadow(4.dp, RoundedCornerShape(12.dp))
-                .background(Color(0xFF3F51B5), RoundedCornerShape(12.dp)),
-            contentAlignment = Alignment.Center
-        ){
-            Text("Выбор спрайтов и фонов",color = Color.White, fontSize = 16.sp)
-
-        }
     }
 }
 

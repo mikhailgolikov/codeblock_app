@@ -20,12 +20,12 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            CodeBlockAppTheme {
-                Surface(color = MaterialTheme.colorScheme.background) {
-                    MainUI()
-                }
+
+            Surface(color = MaterialTheme.colorScheme.background) {
+                MainUI()
             }
         }
+
     }
 }
 
