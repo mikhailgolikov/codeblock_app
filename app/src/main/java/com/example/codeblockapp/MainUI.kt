@@ -6,8 +6,12 @@ import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.ButtonDefaults
@@ -39,65 +43,26 @@ import kotlinx.coroutines.launch
 @Composable
 fun MainUI() {
     var selectedTab by remember { mutableStateOf(0) }
-    val tabs = listOf("Run", "Code")
+    val tabs = listOf("Output", "Code")
 
-    val items = listOf("Кнопка start","Переменные","Операции","Условия","Циклы")
-    val selectedItem = remember{ mutableStateOf(items[0])}
-    val drawerState = rememberDrawerState(DrawerValue.Closed)
-    val scope = rememberCoroutineScope()
-
-    ModalNavigationDrawer(
-        drawerState = drawerState,
-        drawerContent = {
-            ModalDrawerSheet{
-                items.forEach{item->
-                    TextButton(onClick =  {
-                        scope.launch { drawerState.close() }
-                        selectedItem.value = item
-                    },
-                        colors = ButtonDefaults.buttonColors(contentColor = Color.LightGray, containerColor = Color.Transparent)){
-                        Text(item, fontSize =  22.sp)
-                    }
-                }
-            }
-        },
-        scrimColor = Color.DarkGray,
-        content = {
-            Column {
-                Row(
-                    modifier = Modifier
-                        .background(color = Color(0xFFeb6acf))
-                        .padding(horizontal = 8.dp, vertical = 4.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    IconButton(onClick = {
-                        scope.launch { drawerState.open() }
-                    }) {
-                        Icon(Icons.Filled.Menu, contentDescription = "Меню", tint = Color.White)
-                    }
-
-
-                    TabRow(
-                        selectedTabIndex = selectedTab,
-                        containerColor = Color(0xFFeb6acf),
-                        contentColor = Color.White,
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        tabs.forEachIndexed { index, title ->
-                            Tab(
-                                selected = selectedTab == index,
-                                onClick = { selectedTab = index },
-                                text = { Text(title.uppercase(), fontSize = 14.sp) }
-                            )
-                        }
-                    }
-                }
-
-                when (selectedTab) {
-                    0 -> RunScreen()
-                    1 -> CodeScreen()
-                }
+    Column(modifier = Modifier.fillMaxSize()) {
+        TabRow(
+            selectedTabIndex = selectedTab,
+            containerColor = Color(0xFFeb6acf),
+            contentColor = Color.White
+        ) {
+            tabs.forEachIndexed { index, title ->
+                Tab(
+                    selected = selectedTab == index,
+                    onClick = { selectedTab = index },
+                    text = { Text(title.uppercase(), fontSize = 14.sp) }
+                )
             }
         }
-    )
+
+        when (selectedTab) {
+            0 -> RunScreen()
+            1 -> CodeScreen()
+        }
+    }
 }

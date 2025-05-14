@@ -30,16 +30,15 @@ fun RunScreen(){
     Column (
         modifier = Modifier
             .fillMaxSize()
-            .padding(12.dp),
-
+//            .padding(12.dp),
         ){
 
         Box(
             modifier = Modifier
                 .weight(1f)
-                .fillMaxWidth()
-                .shadow(4.dp, RoundedCornerShape(12.dp))
-                .background(Color(0xFFE0E0E0), RoundedCornerShape(12.dp)),
+                .fillMaxWidth(),
+//                .shadow(4.dp, RoundedCornerShape(12.dp))
+//                .background(Color(0xFFE0E0E0)),
             contentAlignment = Alignment.Center
         ){
             Text("Основное поле для вывода результата", fontSize = 16.sp)
