@@ -24,10 +24,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-
+@Preview(showSystemUi = false, showBackground = true)
 @Composable
 fun CodeScreen() {
     val color = remember { mutableStateOf(Color(0xFF4CAF50)) }
@@ -50,7 +51,19 @@ fun CodeScreen() {
                 .weight(1f),
             contentAlignment = Alignment.TopCenter
         ) {
-
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize(),
+//                    .padding(top = 60.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                items(algorithmBlocks) { block ->
+                    block.Create() {
+//                        algorithmBlocks.add(Block())
+                    }
+                }
+            }
             Button(
                 onClick = {
                     if (isRunning.value) {
@@ -75,24 +88,6 @@ fun CodeScreen() {
                 Text(text.value, color = Color.White, fontSize = 24.sp, textAlign = TextAlign.Center)
             }
 
-
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = 60.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                items(algorithmBlocks) { block ->
-                    block.Create(
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .size(200.dp, 60.dp)
-                    )
-                }
-            }
-
-
         }
 
 
@@ -109,14 +104,9 @@ fun CodeScreen() {
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 items(availableBlocks) { block ->
-                    block.Create(
-                        modifier = Modifier
-                            //.size(100.dp, 50.dp)
-                                ,
-                        onClick = {
-                            algorithmBlocks.add(block.copy())
-                        }
-                    )
+                    block.Create {
+                        algorithmBlocks.add(Block())
+                    }
                 }
             }
         }
