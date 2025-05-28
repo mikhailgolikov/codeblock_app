@@ -129,22 +129,25 @@ class IfExpression(
 
 fun main() {
 
-    var q = 1 + (9 - 5);
-    var context: MutableMap<String, Int> = mutableMapOf()
-    context = mutableMapOf("a" to 10, "b" to 5);
-    var expressionFull = DeclarationExpression(
-        "Sosiska", PlusExpression(
-            NumberExpression(context.getOrDefault("a", 0)),
-            MinusExpression(NumberExpression(344), NumberExpression(432))
-        )
-    )
-    var result = expressionFull.interpret(context);
-//    if (result != Unit) {
-//        println("Result: $result")
-//    }else{
-//        for (varible in context){
+//    var q = 1 + (9 - 5);
+//    var context: MutableMap<String, Int> = mutableMapOf()
+//    context = mutableMapOf("a" to 10, "b" to 5);
+//    var expressionFull = DeclarationExpression(
+//        "Sosiska", PlusExpression(
+//            NumberExpression(context.getOrDefault("a", 0)),
+//            MinusExpression(NumberExpression(344), NumberExpression(432))
+//        )
+//    )
+//    var result = expressionFull.interpret(context);
 //
-//        }
-//    }
-    println(context)
+//
+//
+////    if (result != Unit) {
+////        println("Result: $result")
+////    }else{
+////        for (varible in context){
+////
+////        }
+////    }
+//    println(context)
 }

@@ -80,7 +80,15 @@ class VariableBlock(
 
     @Composable
     override fun Create(onClick: () -> Unit) {
-        // здесь фронт (ввод имени переменной)
+        //// здесь фронт надо писать
+        Box(
+            modifier = modifier
+                .background(color)
+                .clickable { onClick() },
+            contentAlignment = Alignment.Center
+        ) {
+            Text(text, fontSize = 16.sp, color = Color.White)
+        }
     }
 }
 

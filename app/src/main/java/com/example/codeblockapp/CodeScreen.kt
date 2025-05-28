@@ -35,11 +35,20 @@ fun CodeScreen() {
     val isRunning = remember { mutableStateOf(false) }
     val text = remember { mutableStateOf("▶") }
 
+// это влада блоки пусыте, я щас сделаю рандомные при запуски
+
+//    val availableBlocks = listOf(
+//        Block(),
+//        Block(),
+//        Block(),
+//        Block()
+//    )
+
     val availableBlocks = listOf(
-        Block(),
-        Block(),
-        Block(),
-        Block()
+        NumberBlock(5),
+        VariableBlock("x"),
+        PlusBlock(),
+        AssignmentBlock("a", NumberBlock(1))
     )
 
     val algorithmBlocks = remember { mutableStateListOf<Block>() }
