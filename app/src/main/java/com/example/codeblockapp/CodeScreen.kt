@@ -70,11 +70,25 @@ fun CodeScreen() {
                         color.value = Color(0xFF4CAF50)
                         text.value = "▶"
                         isRunning.value = false
-                    } else {
+                    }else {
                         color.value = Color(0xFFE52929)
                         text.value = "■"
                         isRunning.value = true
+
+                        // погнал интерпретатор
+                        val context = mutableMapOf<String, Int>()
+                        for (block in algorithmBlocks) {
+                            val expr = block.toExpression()
+                            try {
+                                expr?.interpret(context)
+                            } catch (e: Exception) {
+                                println("ошибка ${block.text}: ${e.message}")
+                            }
+                        }
+
+                        println("Все переменные: $context")
                     }
+
                 },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = color.value

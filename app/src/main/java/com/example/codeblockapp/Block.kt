@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+
 open class Block(
     val text: String = "empty",
     val color: Color = Color.LightGray,
@@ -39,17 +40,196 @@ open class Block(
         .height(IntrinsicSize.Max)
         .background(color)
 ) {
+    // создаю базовую функцию, которую буду переопределять
+    open fun toExpression(): UnitExpression? {
+        return null
+    }
+
     @Composable
+    // фронт
+    // функция криэйт, это Влад похоже делал
     open fun Create(
         onClick: () -> Unit
-    ) {}
+    ) {
+    }
 }
 
-class VariableBlock : Block() {
+interface IntBlock {
+    fun toIntExpression(): IntExpression
+}
+
+class NumberBlock(
+    var number: Int = 0
+) : Block("Число", Color.Cyan) {
+    fun toIntExpression(): IntExpression {
+        return NumberExpression(number)
+    }
+
+    @Composable
+    override fun Create(onClick: () -> Unit) {
+        // здесь фронт (ввод числа)
+    }
+}
+
+class VariableBlock(
+    var name: String = ""
+) : Block("Переменная", Color.Yellow) {
+    fun toIntExpression(): IntExpression {
+        return VariableExpression(name)
+    }
+
+    @Composable
+    override fun Create(onClick: () -> Unit) {
+        // здесь фронт (ввод имени переменной)
+    }
+}
+
+
+
+
+class PlusBlock(
+    var left: Block? = null,
+    var right: Block? = null
+) : Block("Сложение", Color.Green) {
+    fun toIntExpression(): IntExpression? {
+        val l = (left as? IntBlock)?.toIntExpression()
+        val r = (right as? IntBlock)?.toIntExpression()
+        if (l != null && r != null) return PlusExpression(l, r)
+        return null
+    }
+
+    @Composable
+    override fun Create(onClick: () -> Unit) {
+        // здесь фронт (выбор 2 блоков)
+    }
+}
+
+
+class MinusBlock(
+    var left: Block? = null,
+    var right: Block? = null
+) : Block("Вычитание", Color.Red) {
+    fun toIntExpression(): IntExpression? {
+        val l = (left as? IntBlock)?.toIntExpression()
+        val r = (right as? IntBlock)?.toIntExpression()
+        if (l != null && r != null) return MinusExpression(l, r)
+        return null
+    }
+
+    @Composable
+    override fun Create(onClick: () -> Unit) {
+        // здесь фронт
+    }
+}
+
+class MultiplicationBlock(
+    var left: Block? = null,
+    var right: Block? = null
+) : Block("Умножение", Color.Magenta) {
+    fun toIntExpression(): IntExpression? {
+        val l = (left as? IntBlock)?.toIntExpression()
+        val r = (right as? IntBlock)?.toIntExpression()
+        if (l != null && r != null) return MultiplicationExpression(l, r)
+        return null
+    }
+
+    @Composable
+    override fun Create(onClick: () -> Unit) {
+        // здесь фронт
+    }
+}
+
+
+class DivisionBlock(
+    var left: Block? = null,
+    var right: Block? = null
+) : Block("Деление", Color.Blue) {
+    fun toIntExpression(): IntExpression? {
+        val l = (left as? IntBlock)?.toIntExpression()
+        val r = (right as? IntBlock)?.toIntExpression()
+        if (l != null && r != null) return DivisionExpression(l, r)
+        return null
+    }
+
+    @Composable
+    override fun Create(onClick: () -> Unit) {
+        // здесь фронт
+    }
+}
+
+
+// Объявление переменной
+class DeclarationBlock(
+    var name: String = "",
+    var value: Block? = null
+) : Block("Объявление", Color.LightGray) {
+    override fun toExpression(): UnitExpression? {
+        val intValue = (value as? IntBlock)?.toIntExpression() ?: return null
+        return DeclarationExpression(name, intValue)
+    }
+
+    @Composable
+    override fun Create(onClick: () -> Unit) {
+        // здесь фронт
+    }
+}
+
+// Присваивание
+class AssignmentBlock(
+    var name: String = "",
+    var value: Block? = null
+) : Block("Присваивание", Color.LightGray) {
+    override fun toExpression(): UnitExpression? {
+        val intValue = (value as? IntBlock)?.toIntExpression() ?: return null
+        return AssignmentExpression(name, intValue)
+    }
+
+    @Composable
+    override fun Create(onClick: () -> Unit) {
+        // здесь фронт
+    }
+}
+
+
+fun NumberBlock.toIntBlock() = object : IntBlock {
+    override fun toIntExpression(): IntExpression = NumberExpression(number)
+}
+
+fun VariableBlock.toIntBlock() = object : IntBlock {
+    override fun toIntExpression(): IntExpression = VariableExpression(name)
+}
+
+fun PlusBlock.toIntBlock() = object : IntBlock {
+    override fun toIntExpression(): IntExpression = PlusExpression(
+        (left as IntBlock).toIntExpression(),
+        (right as IntBlock).toIntExpression()
+    )
+}
+fun MinusBlock.toIntBlock() = object : IntBlock {
+    override fun toIntExpression(): IntExpression = MinusExpression(
+        (left as IntBlock).toIntExpression(),
+        (right as IntBlock).toIntExpression()
+    )
+}
+
+fun MultiplicationBlock.toIntBlock() = object : IntBlock {
+    override fun toIntExpression(): IntExpression = MultiplicationExpression(
+        (left as IntBlock).toIntExpression(),
+        (right as IntBlock).toIntExpression()
+    )
+}
+
+fun DivisionBlock.toIntBlock() = object : IntBlock {
+    override fun toIntExpression(): IntExpression = DivisionExpression(
+        (left as IntBlock).toIntExpression(),
+        (right as IntBlock).toIntExpression()
+    )
+}
+//class VariableBlock : Block() {
 //    override fun Create(onClick: () -> Unit) {
 //
 //    }
-}
+//}
 
 
 //@Composable
