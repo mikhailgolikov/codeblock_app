@@ -70,6 +70,8 @@ fun CodeScreen() {
                         color.value = Color(0xFF4CAF50)
                         text.value = "▶"
                         isRunning.value = false
+
+
                     }else {
                         color.value = Color(0xFFE52929)
                         text.value = "■"
@@ -77,6 +79,7 @@ fun CodeScreen() {
 
                         // погнал интерпретатор
                         val context = mutableMapOf<String, Int>()
+                        OutputLogger.clear()
                         for (block in algorithmBlocks) {
                             val expr = block.toExpression()
                             try {

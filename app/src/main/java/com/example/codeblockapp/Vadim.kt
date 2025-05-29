@@ -125,6 +125,14 @@ class IfExpression(
             }
         }
     }
+    class OutputExpression(
+        private val expression: IntExpression
+    ) : UnitExpression {
+        override fun interpret(context: MutableMap<String, Int>) {
+            val result = expression.interpret(context)
+            OutputLogger.log(result.toString())
+        }
+    }
 }
 
 fun main() {

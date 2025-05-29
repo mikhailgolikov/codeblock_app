@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.codeblockapp.IfExpression.OutputExpression
 
 
 open class Block(
@@ -253,6 +254,27 @@ class AssignmentBlock(
     }
 }
 
+class OutputBlock(
+    var value: Block? = null
+) : Block("Вывод", Color(0xFF6A5ACD)) {
+
+    override fun toExpression(): UnitExpression? {
+        val valueExpr = (value as? IntBlock)?.toIntExpression() ?: return null
+        return OutputExpression(valueExpr)
+    }
+
+    @Composable
+    override fun Create(onClick: () -> Unit) {
+        // здесь фронт (одно поле под переменную/число)
+        Box(
+            modifier = modifier.clickable { onClick() },
+            contentAlignment = Alignment.Center
+        ) {
+            Text("cout", fontSize = 16.sp, color = Color.White)
+        }
+    }
+}
+
 
 fun NumberBlock.toIntBlock() = object : IntBlock {
     override fun toIntExpression(): IntExpression = NumberExpression(number)
@@ -288,6 +310,7 @@ fun DivisionBlock.toIntBlock() = object : IntBlock {
         (right as IntBlock).toIntExpression()
     )
 }
+
 //class VariableBlock : Block() {
 //    override fun Create(onClick: () -> Unit) {
 //

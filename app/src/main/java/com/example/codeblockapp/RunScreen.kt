@@ -26,25 +26,21 @@ import androidx.compose.ui.unit.sp
 
 @Preview(showBackground = true)
 @Composable
-fun RunScreen(){
-    Column (
+fun RunScreen() {
+    Column(
         modifier = Modifier
             .fillMaxSize()
-//            .padding(12.dp),
-        ){
+            .padding(16.dp)
+    ) {
+        Text("Вывод программы:", fontSize = 18.sp, color = Color.Black)
+        Spacer(modifier = Modifier.height(12.dp))
 
-        Box(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth(),
-//                .shadow(4.dp, RoundedCornerShape(12.dp))
-//                .background(Color(0xFFE0E0E0)),
-            contentAlignment = Alignment.Center
-        ){
-            Text("Основное поле для вывода результата", fontSize = 16.sp)
+        if (OutputLogger.getAll().isEmpty()) {
+            Text("Ничего не выведено", fontSize = 16.sp, color = Color.Gray)
+        } else {
+            OutputLogger.getAll().forEach {
+                Text(it, fontSize = 16.sp, color = Color.DarkGray)
+            }
         }
-
     }
 }
-
-

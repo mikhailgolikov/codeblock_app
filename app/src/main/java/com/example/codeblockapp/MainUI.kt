@@ -27,6 +27,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -42,8 +43,10 @@ import kotlinx.coroutines.launch
 @Preview(showBackground = true)
 @Composable
 fun MainUI() {
+
     var selectedTab by remember { mutableStateOf(0) }
     val tabs = listOf("Output", "Code")
+    val algorithmBlocks = remember { mutableStateListOf<Block>() }
 
     Column(modifier = Modifier.fillMaxSize()) {
         TabRow(
