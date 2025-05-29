@@ -17,32 +17,32 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-@Preview(showSystemUi = false, showBackground = true)
+//@Preview(showSystemUi = false, showBackground = true)
 @Composable
-fun CodeScreen() {
+fun CodeScreen(
+    algorithmBlocks: SnapshotStateList<Block>
+) {
     val color = remember { mutableStateOf(Color(0xFF4CAF50)) }
     val isRunning = remember { mutableStateOf(false) }
     val text = remember { mutableStateOf("▶") }
 
     val availableBlocks = listOf(
-        NumberBlock(5),
-        VariableBlock("x"),
+        DeclarationBlock(),
+        AssignmentBlock(),
         PlusBlock(),
-        AssignmentBlock("a", NumberBlock(1))
     )
 
-    val algorithmBlocks = remember { mutableStateListOf<Block>() }
+
 
     Column {
         Box(
@@ -76,17 +76,16 @@ fun CodeScreen() {
                         isRunning.value = true
 
                         // погнал интерпретатор
-                        val context = mutableMapOf<String, Int>()
-                        for (block in algorithmBlocks) {
-                            val expr = block.toExpression()
-                            try {
-                                expr?.interpret(context)
-                            } catch (e: Exception) {
-                                println("ошибка ${block.text}: ${e.message}")
-                            }
-                        }
-
-                        println("Все переменные: $context")
+//                        val context = mutableMapOf<String, Int>()
+//                        for (block in algorithmBlocks) {
+//                            val expr = block.toUnitExpression()
+//                            try {
+//                                expr?.interpret(context)
+//                            } catch (e: Exception) {
+//                                println("ошибка ${block.text}: ${e.message}")
+//                            }
+//                        }
+//                        println("Все переменные: $context")
                     }
 
                 },
@@ -119,7 +118,9 @@ fun CodeScreen() {
             ) {
                 items(availableBlocks) { block ->
                     block.Create {
-                        algorithmBlocks.add(block)
+                        val newBlock = block.Copy()
+                        newBlock.clickable = false
+                        algorithmBlocks.add(newBlock)
                     }
                 }
             }

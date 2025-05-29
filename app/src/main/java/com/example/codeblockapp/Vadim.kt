@@ -31,10 +31,10 @@ class VariableExpression(private val name: String) : IntExpression {
 // объявление
 class DeclarationExpression(
     private val variableNames: String,
-    private val right: IntExpression
 ) : UnitExpression {
+    private val intDefault: Int = 0
     override fun interpret(context: MutableMap<String, Int>) {
-        context.put(variableNames, right.interpret(context))
+        context.put(variableNames, intDefault)
     }
 }
 
@@ -49,54 +49,50 @@ class AssignmentExpression(
     }
 }
 
-class MinusExpression(
-    private var left: IntExpression,
-    private var right: IntExpression
+
+
+open class ArithmeticExpression(
+    protected var left: IntExpression,
+    protected var right: IntExpression
 ) : IntExpression {
     override fun interpret(context: MutableMap<String, Int>): Int {
-        return left.interpret(context) - right.interpret(context)
-
+     return 0//?????????
     }
-
 }
 
-class PlusExpression(
-    private var left: IntExpression,
-    private var right: IntExpression
-) : IntExpression {
+class MinusExpression(left: IntExpression, right: IntExpression)
+    : ArithmeticExpression(left, right), IntExpression {
 
+    override fun interpret(context: MutableMap<String, Int>): Int {
+        return left.interpret(context) - right.interpret(context)
+    }
+}
+
+class PlusExpression(left: IntExpression, right: IntExpression)
+    : ArithmeticExpression(left, right), IntExpression {
 
     override fun interpret(context: MutableMap<String, Int>): Int {
         return left.interpret(context) + right.interpret(context)
-
     }
-
 }
 
-class MultiplicationExpression(
-    private var left: IntExpression,
-    private var right: IntExpression
-) : IntExpression {
-
+class MultiplicationExpression(left: IntExpression, right: IntExpression)
+    : ArithmeticExpression(left, right), IntExpression {
 
     override fun interpret(context: MutableMap<String, Int>): Int {
         return left.interpret(context) * right.interpret(context)
-
     }
-
 }
 
-class DivisionExpression(
-    private var left: IntExpression,
-    private var right: IntExpression
-) : IntExpression {
+class DivisionExpression(left: IntExpression, right: IntExpression)
+    : ArithmeticExpression(left, right), IntExpression {
 
     override fun interpret(context: MutableMap<String, Int>): Int {
         return left.interpret(context) / right.interpret(context)
-
     }
-
 }
+
+
 
 enum class ComparisonOperator {
     EQ, UNEQ, LS, MR, LAE, MAE
