@@ -28,10 +28,11 @@ import androidx.compose.ui.unit.sp
 
 
 open class Block(
-    val text: String = "empty",
-    val color: Color = Color.LightGray,
-    val minWidth: Dp = 100.dp,
-    val minHeight: Dp = 50.dp,
+    val text: String,
+    var color: Color
+) {
+    val minWidth: Dp = 100.dp
+    val minHeight: Dp = 50.dp
     var modifier: Modifier = Modifier
         .padding(10.dp)
         .clip(CircleShape)
@@ -39,7 +40,7 @@ open class Block(
         .width(IntrinsicSize.Max)
         .height(IntrinsicSize.Max)
         .background(color)
-) {
+
     // создаю базовую функцию, которую буду переопределять
     open fun toExpression(): UnitExpression? {
         return null
@@ -51,6 +52,13 @@ open class Block(
     open fun Create(
         onClick: () -> Unit
     ) {
+        Box(
+            modifier = modifier
+                .clickable { onClick() },
+            contentAlignment = Alignment.Center
+        ) {
+            Text(text, fontSize = 16.sp, color = Color.White)
+        }
     }
 }
 
@@ -67,7 +75,13 @@ class NumberBlock(
 
     @Composable
     override fun Create(onClick: () -> Unit) {
-        // здесь фронт (ввод числа)
+        Box(
+            modifier = modifier
+                .clickable { onClick() },
+            contentAlignment = Alignment.Center
+        ) {
+            Text(text, fontSize = 16.sp, color = Color.White)
+        }
     }
 }
 
@@ -83,7 +97,6 @@ class VariableBlock(
         //// здесь фронт надо писать
         Box(
             modifier = modifier
-                .background(color)
                 .clickable { onClick() },
             contentAlignment = Alignment.Center
         ) {
@@ -109,6 +122,13 @@ class PlusBlock(
     @Composable
     override fun Create(onClick: () -> Unit) {
         // здесь фронт (выбор 2 блоков)
+        Box(
+            modifier = modifier
+                .clickable { onClick() },
+            contentAlignment = Alignment.Center
+        ) {
+            Text(text, fontSize = 16.sp, color = Color.White)
+        }
     }
 }
 
@@ -127,6 +147,13 @@ class MinusBlock(
     @Composable
     override fun Create(onClick: () -> Unit) {
         // здесь фронт
+        Box(
+            modifier = modifier
+                .clickable { onClick() },
+            contentAlignment = Alignment.Center
+        ) {
+            Text(text, fontSize = 16.sp, color = Color.White)
+        }
     }
 }
 
@@ -144,6 +171,13 @@ class MultiplicationBlock(
     @Composable
     override fun Create(onClick: () -> Unit) {
         // здесь фронт
+        Box(
+            modifier = modifier
+                .clickable { onClick() },
+            contentAlignment = Alignment.Center
+        ) {
+            Text(text, fontSize = 16.sp, color = Color.White)
+        }
     }
 }
 
@@ -162,6 +196,13 @@ class DivisionBlock(
     @Composable
     override fun Create(onClick: () -> Unit) {
         // здесь фронт
+        Box(
+            modifier = modifier
+                .clickable { onClick() },
+            contentAlignment = Alignment.Center
+        ) {
+            Text(text, fontSize = 16.sp, color = Color.White)
+        }
     }
 }
 
@@ -179,6 +220,13 @@ class DeclarationBlock(
     @Composable
     override fun Create(onClick: () -> Unit) {
         // здесь фронт
+        Box(
+            modifier = modifier
+                .clickable { onClick() },
+            contentAlignment = Alignment.Center
+        ) {
+            Text(text, fontSize = 16.sp, color = Color.White)
+        }
     }
 }
 
@@ -195,6 +243,13 @@ class AssignmentBlock(
     @Composable
     override fun Create(onClick: () -> Unit) {
         // здесь фронт
+        Box(
+            modifier = modifier
+                .clickable { onClick() },
+            contentAlignment = Alignment.Center
+        ) {
+            Text(text, fontSize = 16.sp, color = Color.White)
+        }
     }
 }
 
