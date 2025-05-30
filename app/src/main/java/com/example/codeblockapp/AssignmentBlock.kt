@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.sp
 class AssignmentBlock (
     var name: String = "",
     var value: Block? = null,
-) : Block(color = Color.Green), UnitBlock {
+) : Block(color = Color.LightGray), UnitBlock {
 
     override fun toUnitExpression(): UnitExpression? {
         val intValue = (value as? IntBlock)?.toIntExpression() ?: return null

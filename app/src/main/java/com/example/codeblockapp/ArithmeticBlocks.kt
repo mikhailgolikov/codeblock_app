@@ -71,17 +71,20 @@ abstract class ArithmeticBlock (
             contentAlignment = Alignment.Center
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                if (left?.clickable == true) {
-                    left?.modifier = left?.modifier!!.clickable{
-                        inputBlock = left
-                    }
-                }
-                left?.Create {  }
+                TextField(
+                    value = leftStateText,
+                    enabled = enabled,
+                    onValueChange = {
+                        leftStateText = it
+                        leftText = it
+                    },
+                    singleLine = true,
+                    modifier = Modifier.width(80.dp)
+                )
 
                 Text(text = symbol, fontSize = 20.sp, color = Color.Black,
                     modifier = Modifier.padding(8.dp))
 
-                right?.Create {  }
 
                 TextField(
                     value = rightStateText,
