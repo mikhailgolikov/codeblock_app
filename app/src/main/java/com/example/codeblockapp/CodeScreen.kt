@@ -39,9 +39,10 @@ fun CodeScreen(
     val text = remember { mutableStateOf("▶") }
 
     val availableBlocks = listOf(
-//        DeclarationBlock(),
-//        AssignmentBlock(),
+        DeclarationBlock(),
+        AssignmentBlock(),
         PlusBlock(),
+
     )
 
     Column {
@@ -69,7 +70,7 @@ fun CodeScreen(
                         isRunning.value = false
 
 
-                    }else {
+                    } else {
                         color.value = Color(0xFFE52929)
                         text.value = "■"
                         isRunning.value = true
@@ -99,7 +100,12 @@ fun CodeScreen(
                     .size(50.dp)
                     .align(Alignment.TopEnd)
             ) {
-                Text(text.value, color = Color.White, fontSize = 24.sp, textAlign = TextAlign.Center)
+                Text(
+                    text.value,
+                    color = Color.White,
+                    fontSize = 24.sp,
+                    textAlign = TextAlign.Center
+                )
             }
 
         }
@@ -126,8 +132,7 @@ fun CodeScreen(
                         block.Create {
                             algorithmBlocks.add(newBlock)
                         }
-                    }
-                    else {
+                    } else {
                         block.Create {
 
                         }

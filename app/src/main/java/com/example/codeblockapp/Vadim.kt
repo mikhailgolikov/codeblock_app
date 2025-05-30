@@ -131,6 +131,71 @@ class IfExpression(
     }
 }
 
+class WhileExpression(
+    private val left: IntExpression,
+    private val operator: ComparisonOperator,
+    private val right: IntExpression,
+    private val body: List<UnitExpression>
+) : UnitExpression {
+    override fun interpret(context: MutableMap<String, Int>) {
+        while (
+            when (operator) {
+                ComparisonOperator.EQ -> left.interpret(context) == right.interpret(context)
+                ComparisonOperator.UNEQ -> left.interpret(context) != right.interpret(context)
+                ComparisonOperator.LS -> left.interpret(context) < right.interpret(context)
+                ComparisonOperator.MR -> left.interpret(context) > right.interpret(context)
+                ComparisonOperator.LAE -> left.interpret(context) <= right.interpret(context)
+                ComparisonOperator.MAE -> left.interpret(context) >= right.interpret(context)
+            }
+        ) {
+            for (cmd in body) {
+                cmd.interpret(context)
+            }
+        }
+    }
+}
+
+class ArrayDeclarationExpression(
+    private val name: String,
+    private val size: Int
+) : UnitExpression {
+    override fun interpret(context: MutableMap<String, Int>) {
+        ArrayMemory.arrays[name] = IntArray(size) {0}
+    }
+}
+
+object ArrayMemory {
+    val arrays: MutableMap<String, IntArray> = mutableMapOf()
+}
+
+class ArrayAssignmentExpression(
+    private val name: String,
+    private val index: IntExpression,
+    private val value: IntExpression
+) : UnitExpression {
+    override fun interpret(context: MutableMap<String, Int>) {
+        val arr = ArrayMemory.arrays[name] ?: error("этого массива нету ")
+        val idx = index.interpret(context)
+        val v = value.interpret(context)
+        if (idx in arr.indices) {
+            arr[idx] = v
+        } else error("индекс вне массива $name")
+    }
+}
+
+class ArrayReadExpression(
+    private val name: String,
+    private val index: IntExpression
+) : IntExpression {
+    override fun interpret(context: MutableMap<String, Int>): Int {
+        val arr = ArrayMemory.arrays[name] ?: error("этого массива нету ")
+        val idx = index.interpret(context)
+        if (idx in arr.indices) {
+            return arr[idx]
+        } else error("индекс вне массива $name")
+    }
+}
+
 fun main() {
 
 //    var q = 1 + (9 - 5);

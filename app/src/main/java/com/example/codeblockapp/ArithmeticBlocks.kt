@@ -83,16 +83,16 @@ abstract class ArithmeticBlock (
 
                 right?.Create {  }
 
-//                TextField(
-//                    value = rightStateText,
-//                    enabled = enabled,
-//                    onValueChange = {
-//                        rightStateText = it
-//                        rightText = it
-//                    },
-//                    singleLine = true,
-//                    modifier = Modifier.width(80.dp)
-//                )
+                TextField(
+                    value = rightStateText,
+                    enabled = enabled,
+                    onValueChange = {
+                        rightStateText = it
+                        rightText = it
+                    },
+                    singleLine = true,
+                    modifier = Modifier.width(80.dp)
+                )
             }
         }
 
