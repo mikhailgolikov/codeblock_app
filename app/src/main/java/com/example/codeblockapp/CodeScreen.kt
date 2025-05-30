@@ -17,17 +17,19 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-//@Preview(showSystemUi = false, showBackground = true)
 @Composable
 fun CodeScreen(
     algorithmBlocks: SnapshotStateList<Block>
@@ -37,12 +39,10 @@ fun CodeScreen(
     val text = remember { mutableStateOf("▶") }
 
     val availableBlocks = listOf(
-        DeclarationBlock(),
-        AssignmentBlock(),
+//        DeclarationBlock(),
+//        AssignmentBlock(),
         PlusBlock(),
     )
-
-
 
     Column {
         Box(
@@ -54,14 +54,11 @@ fun CodeScreen(
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize(),
-//                    .padding(top = 60.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 items(algorithmBlocks) { block ->
-                    block.Create() {
-//                        algorithmBlocks.add(Block())
-                    }
+                    block.Create() {}
                 }
             }
             Button(
@@ -121,10 +118,19 @@ fun CodeScreen(
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 items(availableBlocks) { block ->
-                    block.Create {
-                        val newBlock = block.Copy()
-                        newBlock.clickable = false
-                        algorithmBlocks.add(newBlock)
+                    val newBlock = block.Copy()
+                    newBlock.clickable = false
+//                    block.inputBlock = newBlock
+
+                    if (block.inputBlock == null) {
+                        block.Create {
+                            algorithmBlocks.add(newBlock)
+                        }
+                    }
+                    else {
+                        block.Create {
+
+                        }
                     }
                 }
             }
