@@ -41,8 +41,7 @@ class DeclarationExpression(
 
 // присваивание
 class AssignmentExpression(
-    private val variableName: String,
-    private val right: IntExpression
+    private val variableName: String, private val right: IntExpression
 ) : UnitExpression {
     override fun interpret(context: MutableMap<String, Int>) {
         context[variableName] = right.interpret(context)
@@ -50,48 +49,45 @@ class AssignmentExpression(
 }
 
 
-
 open class ArithmeticExpression(
-    protected var left: IntExpression,
-    protected var right: IntExpression
+    protected var left: IntExpression, protected var right: IntExpression
 ) : IntExpression {
     override fun interpret(context: MutableMap<String, Int>): Int {
-     return 0//?????????
+        return 0//?????????
     }
 }
 
-class MinusExpression(left: IntExpression, right: IntExpression)
-    : ArithmeticExpression(left, right), IntExpression {
+class MinusExpression(left: IntExpression, right: IntExpression) :
+    ArithmeticExpression(left, right), IntExpression {
 
     override fun interpret(context: MutableMap<String, Int>): Int {
         return left.interpret(context) - right.interpret(context)
     }
 }
 
-class PlusExpression(left: IntExpression, right: IntExpression)
-    : ArithmeticExpression(left, right), IntExpression {
+class PlusExpression(left: IntExpression, right: IntExpression) : ArithmeticExpression(left, right),
+    IntExpression {
 
     override fun interpret(context: MutableMap<String, Int>): Int {
         return left.interpret(context) + right.interpret(context)
     }
 }
 
-class MultiplicationExpression(left: IntExpression, right: IntExpression)
-    : ArithmeticExpression(left, right), IntExpression {
+class MultiplicationExpression(left: IntExpression, right: IntExpression) :
+    ArithmeticExpression(left, right), IntExpression {
 
     override fun interpret(context: MutableMap<String, Int>): Int {
         return left.interpret(context) * right.interpret(context)
     }
 }
 
-class DivisionExpression(left: IntExpression, right: IntExpression)
-    : ArithmeticExpression(left, right), IntExpression {
+class DivisionExpression(left: IntExpression, right: IntExpression) :
+    ArithmeticExpression(left, right), IntExpression {
 
     override fun interpret(context: MutableMap<String, Int>): Int {
         return left.interpret(context) / right.interpret(context)
     }
 }
-
 
 
 enum class ComparisonOperator {
@@ -116,11 +112,12 @@ class IfExpression(
             ComparisonOperator.MAE -> l >= r
         }
         if (condition) {
-            for (unitExpression in thenBlock){
+            for (unitExpression in thenBlock) {
                 unitExpression.interpret(context)
             }
         }
     }
+
     class OutputExpression(
         private val expression: IntExpression
     ) : UnitExpression {
@@ -138,8 +135,7 @@ class WhileExpression(
     private val body: List<UnitExpression>
 ) : UnitExpression {
     override fun interpret(context: MutableMap<String, Int>) {
-        while (
-            when (operator) {
+        while (when (operator) {
                 ComparisonOperator.EQ -> left.interpret(context) == right.interpret(context)
                 ComparisonOperator.UNEQ -> left.interpret(context) != right.interpret(context)
                 ComparisonOperator.LS -> left.interpret(context) < right.interpret(context)
@@ -156,11 +152,10 @@ class WhileExpression(
 }
 
 class ArrayDeclarationExpression(
-    private val name: String,
-    private val size: Int
+    private val name: String, private val size: Int
 ) : UnitExpression {
     override fun interpret(context: MutableMap<String, Int>) {
-        ArrayMemory.arrays[name] = IntArray(size) {0}
+        ArrayMemory.arrays[name] = IntArray(size) { 0 }
     }
 }
 
@@ -169,9 +164,7 @@ object ArrayMemory {
 }
 
 class ArrayAssignmentExpression(
-    private val name: String,
-    private val index: IntExpression,
-    private val value: IntExpression
+    private val name: String, private val index: IntExpression, private val value: IntExpression
 ) : UnitExpression {
     override fun interpret(context: MutableMap<String, Int>) {
         val arr = ArrayMemory.arrays[name] ?: error("этого массива нету ")
@@ -184,8 +177,7 @@ class ArrayAssignmentExpression(
 }
 
 class ArrayReadExpression(
-    private val name: String,
-    private val index: IntExpression
+    private val name: String, private val index: IntExpression
 ) : IntExpression {
     override fun interpret(context: MutableMap<String, Int>): Int {
         val arr = ArrayMemory.arrays[name] ?: error("этого массива нету ")

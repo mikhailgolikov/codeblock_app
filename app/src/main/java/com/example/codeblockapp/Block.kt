@@ -40,13 +40,14 @@ open class Block {
 
     constructor(color: Color) {
         this.color = color
-        this.modifier = Modifier
-            .padding(10.dp)
-            .clip(CircleShape)
-            .defaultMinSize(minWidth, minHeight)
-            .width(IntrinsicSize.Max)
-            .height(IntrinsicSize.Max)
-            .background(color)
+        this.modifier =
+            Modifier
+                .padding(10.dp)
+                .clip(CircleShape)
+                .defaultMinSize(minWidth, minHeight)
+                .width(IntrinsicSize.Max)
+                .height(IntrinsicSize.Max)
+                .background(color)
     }
 
     @Composable
@@ -58,7 +59,7 @@ open class Block {
         }
     }
 
-    open fun Copy() : Block{
+    open fun Copy(): Block {
         return Block()
     }
 }
@@ -73,15 +74,6 @@ interface IntBlock {
 }
 
 
-
-
-
-
-
-
-
-
-
 class NumberBlock(
     var number: Int = 0
 ) : Block(Color.Cyan) {
@@ -92,9 +84,7 @@ class NumberBlock(
     @Composable
     override fun Create(onClick: () -> Unit) {
         Box(
-            modifier = modifier
-                .clickable { onClick() },
-            contentAlignment = Alignment.Center
+            modifier = modifier.clickable { onClick() }, contentAlignment = Alignment.Center
         ) {
             Text(text, fontSize = 16.sp, color = Color.White)
         }

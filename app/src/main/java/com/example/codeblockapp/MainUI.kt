@@ -34,8 +34,7 @@ fun MainUI() {
                 Tab(
                     selected = selectedTab == index,
                     onClick = { selectedTab = index },
-                    text = { Text(title.uppercase(), fontSize = 14.sp) }
-                )
+                    text = { Text(title.uppercase(), fontSize = 14.sp) })
             }
         }
 

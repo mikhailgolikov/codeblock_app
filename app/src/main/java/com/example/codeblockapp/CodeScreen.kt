@@ -43,18 +43,16 @@ fun CodeScreen(
         AssignmentBlock(),
         PlusBlock(),
 
-    )
+        )
 
     Column {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .weight(1f),
-            contentAlignment = Alignment.TopCenter
+                .weight(1f), contentAlignment = Alignment.TopCenter
         ) {
             LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize(),
+                modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -101,10 +99,7 @@ fun CodeScreen(
                     .align(Alignment.TopEnd)
             ) {
                 Text(
-                    text.value,
-                    color = Color.White,
-                    fontSize = 24.sp,
-                    textAlign = TextAlign.Center
+                    text.value, color = Color.White, fontSize = 24.sp, textAlign = TextAlign.Center
                 )
             }
 
